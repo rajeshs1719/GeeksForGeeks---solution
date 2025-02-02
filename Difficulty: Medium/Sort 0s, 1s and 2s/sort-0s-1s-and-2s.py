@@ -1,5 +1,3 @@
-#----- Dutch National Flag Algorithm-----
-
 #{ 
  # Driver Code Starts
 
