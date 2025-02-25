@@ -3,29 +3,38 @@
 #Initial Template for Python 3
 
 # } Driver Code Ends
-#User function Template for python3
 
+from typing import List
 
 class Solution:
-    
-    #Function to find largest rectangular area possible in a given histogram.
     def getMaxArea(self,arr):
-        #code here
         n = len(arr)
-        stack = []
-        max_area = 0
+        stack =[]
         
+        left = [-1]*n
         for i in range(n):
-            while stack and arr[i]<arr[stack[-1]]:
-                height = arr[stack.pop()]
-                width = i if not stack else i-stack[-1]-1
-                max_area = max(max_area , height*width)
+            while stack and arr[stack[-1]] >= arr[i]:
+                stack.pop()
+            left[i] = stack[-1] if stack else -1
             stack.append(i)
-        while stack:
-            height = arr[stack.pop()]
-            width = n if not stack else n - stack[-1]-1
-            max_area = max(max_area, height*width)
+            
+        stack.clear()
+        
+        right = [n] * n  
+        for i in range(n - 1, -1, -1):
+            while stack and arr[stack[-1]] >= arr[i]:
+                stack.pop()
+            right[i] = stack[-1] if stack else n  
+            stack.append(i)
+        
+        max_area = 0
+        for i in range(n):
+            width = right[i] - left[i] - 1
+            area = arr[i] * width
+            max_area = max(max_area, area)
+        
         return max_area
+        
 
 #{ 
  # Driver Code Starts.
